@@ -185,7 +185,7 @@ img {
   position: relative;
   height: 60vh;
   min-height: 400px;
-  background: url("../media/img/herobackground.jpg") no-repeat center
+  background: url("./media/img/herobackground.jpg") no-repeat center
     center/cover;
   display: flex;
   align-items: center;
