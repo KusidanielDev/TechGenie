@@ -7,7 +7,7 @@
       name="description"
       content="Tech GENIE - Your one-stop shop for the latest gadgets"
     />
-    <link rel="stylesheet" href="./style3.css" />
+    <link rel="stylesheet" href="./style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -15,21 +15,22 @@
     <title>Tech GENIE - Premium Gadgets Store</title>
   </head>
   <body>
-    <!-- Header with improved navigation -->
-    <!-- In your header section -->
+    <!-- Header navigation -->
     <header class="main-header">
       <div class="header-container">
         <div class="logo-container">
           <button class="mobile-menu-toggle" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
           </button>
-          <h1 class="logo">TECH GENIE</h1>
+          <h1 class="logo"><a href="index.html">TECH GENIE</a></h1>
         </div>
         <nav class="main-nav">
           <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
             <li><a href="#products">Products</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li><a href="faq.html">FAQs</a></li>
             <li class="desktop-cart">
               <a href="#cart" class="cart-link">
                 <i class="fas fa-shopping-cart"></i>
@@ -210,6 +211,25 @@
           <button class="btn btn-primary checkout-btn">
             Proceed to Checkout
           </button>
+        </div>
+      </div>
+    </div>
+    <!-- Product Detail Modal -->
+    <div class="product-modal" id="product-modal">
+      <button class="close-modal" aria-label="Close product view">
+        &times;
+      </button>
+      <div class="modal-content">
+        <div class="product-gallery-container">
+          <div class="product-gallery">
+            <!-- Empty at first! Slides are added via JS -->
+          </div>
+          <button class="gallery-prev">&lt;</button>
+          <button class="gallery-next">&gt;</button>
+          <div class="gallery-indicators"></div>
+        </div>
+        <div class="product-details">
+          <!-- Content will be injected here -->
         </div>
       </div>
     </div>

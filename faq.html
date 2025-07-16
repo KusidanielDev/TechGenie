@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech GENIE - FAQs</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Reuse your existing header -->
+    <header class="main-header">
+      <div class="header-container">
+        <div class="logo-container">
+          <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h1 class="logo"><a href="index.html">TECH GENIE</a></h1>
+        </div>
+        <nav class="main-nav">
+          <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+            <li class="desktop-cart">
+              <a href="#cart" class="cart-link">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- Mobile cart button (outside nav) -->
+        <a
+          href="#cart"
+          class="cart-btn mobile-cart-btn"
+          aria-label="Shopping cart"
+        >
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count">0</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="faq-container">
+      <h1>Frequently Asked Questions</h1>
+
+      <div class="faq-accordion">
+        <!-- Question 1 -->
+        <div class="faq-item">
+          <button class="faq-question">
+            What payment methods do you accept?
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>
+              We accept Visa, Mastercard, PayPal, and mobile money payments.
+            </p>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="faq-item">
+          <button class="faq-question">
+            How long does delivery take?
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>
+              Delivery typically takes 2-3 business days within Accra and 3-5
+              days for other regions.
+            </p>
+          </div>
+        </div>
+        <!-- Question 3 -->
+        <div class="faq-item">
+          <button class="faq-question">
+            How long does delivery take?
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>
+              Delivery typically takes 2-3 business days within Accra and 3-5
+              days for other regions.
+            </p>
+          </div>
+        </div>
+        <!-- Question 4 -->
+        <div class="faq-item">
+          <button class="faq-question">
+            How long does delivery take?
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>
+              Delivery typically takes 2-3 business days within Accra and 3-5
+              days for other regions.
+            </p>
+          </div>
+        </div>
+
+        <!-- Add more questions as needed -->
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <div class="footer-container">
+        <div class="footer-logo">
+          <h2>Tech GENIE</h2>
+          <p>Technology for everyone</p>
+        </div>
+
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#">Shipping Policy</a></li>
+            <li><a href="#">Returns</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-newsletter">
+          <h3>Newsletter</h3>
+          <p>Subscribe for updates and offers</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your email" required />
+            <button type="submit" class="btn btn-secondary">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Tech GENIE. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="cart-modal" id="cart-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Your Cart</h3>
+          <button class="close-modal" aria-label="Close cart">&times;</button>
+        </div>
+        <div class="modal-body" id="cart-items">
+          <div class="empty-cart">
+            <i class="fas fa-shopping-cart"></i>
+            <p>Your cart is empty</p>
+            <a href="index.html#products" class="btn">Continue Shopping</a>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <p class="cart-total">
+            Total: $<span id="cart-total-amount">0.00</span>
+          </p>
+          <button class="btn btn-primary checkout-btn">
+            Proceed to Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="faq.js"></script>
+  </body>
+</html>
