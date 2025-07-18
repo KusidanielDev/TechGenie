@@ -8,7 +8,7 @@ const products = [
     images: [
       "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?q=80&w=1800",
       "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1800",
-      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1800",
+      "./media/vids/vid2.mp4",
     ],
     description: '15.6" FHD Display • 16GB RAM • 512GB SSD',
   },
@@ -324,6 +324,68 @@ function showNotification(message, type = "success") {
   const galleryIndicators = productModal?.querySelector(".gallery-indicators");
   let currentSlide = 0;
 
+  function injectVideoStyles() {
+    if (document.getElementById("video-styles")) return;
+
+    const videoStyles = document.createElement("style");
+    videoStyles.id = "video-styles";
+    videoStyles.textContent = `
+      .product-gallery {
+        display: flex;
+        transition: transform 0.3s ease;
+      }
+      
+      .product-gallery > * {
+        min-width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .product-gallery .video-container {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 75%; /* 4:3 aspect ratio */
+        overflow: hidden;
+      }
+      
+      .product-gallery .product-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        background: #000;
+      }
+      
+      .video-play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 10;
+        transition: opacity 0.3s;
+      }
+      
+      .video-play-button.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+    `;
+    document.head.appendChild(videoStyles);
+  }
+
   function updateGallery() {
     if (!productGallery || !productGallery.children.length) return;
     const slideWidth = productGallery.clientWidth;
@@ -356,13 +418,45 @@ function showNotification(message, type = "success") {
 
   // Helper function to create video element
   function createVideoElement(src) {
+    const container = document.createElement("div");
+    container.className = "video-container";
+
     const video = document.createElement("video");
     video.src = src;
     video.controls = true;
     video.muted = true;
-    video.autoplay = true;
+    video.autoplay = false;
     video.loop = true;
-    return video;
+    video.playsInline = true;
+    video.className = "product-video";
+
+    const playButton = document.createElement("div");
+    playButton.className = "video-play-button";
+    playButton.innerHTML = "";
+
+    playButton.addEventListener("click", () => {
+      video.play();
+      playButton.classList.add("hidden");
+    });
+
+    video.addEventListener("click", () => {
+      if (video.paused) {
+        video.play();
+        playButton.classList.add("hidden");
+      } else {
+        video.pause();
+        playButton.classList.remove("hidden");
+      }
+    });
+
+    video.addEventListener("play", () => playButton.classList.add("hidden"));
+    video.addEventListener("pause", () =>
+      playButton.classList.remove("hidden")
+    );
+
+    container.appendChild(video);
+    container.appendChild(playButton);
+    return container;
   }
 
   function openProductModal(product) {
