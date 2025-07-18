@@ -317,77 +317,100 @@ function showNotification(message, type = "success") {
 // ========== PRODUCT MODAL MODULE ==========
 (function productModalModule() {
   const productModal = document.getElementById("product-modal");
-  const productGallery = productModal?.querySelector(".product-gallery");
-  const productDetails = productModal?.querySelector(".product-details");
-  const galleryPrev = productModal?.querySelector(".gallery-prev");
-  const galleryNext = productModal?.querySelector(".gallery-next");
-  const galleryIndicators = productModal?.querySelector(".gallery-indicators");
+  if (!productModal) return; // Exit if modal not found
+
+  const productGallery = productModal.querySelector(".product-gallery");
+  const productDetails = productModal.querySelector(".product-details");
+  const galleryPrev = productModal.querySelector(".gallery-prev");
+  const galleryNext = productModal.querySelector(".gallery-next");
+  const galleryIndicators = productModal.querySelector(".gallery-indicators");
   let currentSlide = 0;
 
-  function injectVideoStyles() {
-    if (document.getElementById("video-styles")) return;
-
-    const videoStyles = document.createElement("style");
-    videoStyles.id = "video-styles";
-    videoStyles.textContent = `
-      .product-gallery {
-        display: flex;
-        transition: transform 0.3s ease;
-      }
-      
-      .product-gallery > * {
-        min-width: 100%;
-        box-sizing: border-box;
-      }
-      
-      .product-gallery .video-container {
-        position: relative;
-        width: 100%;
-        height: 0;
-        padding-bottom: 75%; /* 4:3 aspect ratio */
-        overflow: hidden;
-      }
-      
-      .product-gallery .product-video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        background: #000;
-      }
-      
-      .video-play-button {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 60px;
-        height: 60px;
-        background: rgba(0, 0, 0, 0.6);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        z-index: 10;
-        transition: opacity 0.3s;
-      }
-      
-      .video-play-button.hidden {
-        opacity: 0;
-        pointer-events: none;
-      }
-    `;
-    document.head.appendChild(videoStyles);
-  }
+  // Create and inject video styles
+  const videoStyles = document.createElement("style");
+  videoStyles.textContent = `
+    .product-gallery {
+      display: flex;
+      transition: transform 0.3s ease;
+      height: 400px; /* Fixed height for gallery */
+    }
+    
+    .product-gallery > * {
+      min-width: 100%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+    
+    .product-gallery img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .product-video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background: #000;
+    }
+    
+    .video-play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 10;
+      transition: opacity 0.3s;
+    }
+    
+    .video-play-button.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .gallery-indicators {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+    }
+    
+    .gallery-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ccc;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+    
+    .gallery-indicator.active {
+      background: #333;
+    }
+  `;
+  document.head.appendChild(videoStyles);
 
   function updateGallery() {
-    if (!productGallery || !productGallery.children.length) return;
+    if (!productGallery.children.length) return;
     const slideWidth = productGallery.clientWidth;
     productGallery.style.transform = `translateX(-${
       currentSlide * slideWidth
@@ -408,10 +431,10 @@ function showNotification(message, type = "success") {
   }
 
   // Helper function to create image element
-  function createImageElement(src, alt, index) {
+  function createImageElement(src, alt) {
     const img = document.createElement("img");
     img.src = src;
-    img.alt = `${alt} - Image ${index + 1}`;
+    img.alt = alt;
     img.loading = "lazy";
     return img;
   }
@@ -432,7 +455,7 @@ function showNotification(message, type = "success") {
 
     const playButton = document.createElement("div");
     playButton.className = "video-play-button";
-    playButton.innerHTML = "";
+    playButton.innerHTML = "▶";
 
     playButton.addEventListener("click", () => {
       video.play();
@@ -460,28 +483,23 @@ function showNotification(message, type = "success") {
   }
 
   function openProductModal(product) {
-    if (
-      !productModal ||
-      !productGallery ||
-      !productDetails ||
-      !galleryIndicators
-    )
-      return;
+    if (!productGallery || !productDetails || !galleryIndicators) return;
 
+    // Clear existing content
     productGallery.innerHTML = "";
     productDetails.innerHTML = "";
     galleryIndicators.innerHTML = "";
 
+    // Create media elements
     product.images.forEach((mediaSrc, index) => {
-      // Determine if it's a video or image
       const isVideo = mediaSrc.toLowerCase().endsWith(".mp4");
-
       const mediaElement = isVideo
         ? createVideoElement(mediaSrc)
-        : createImageElement(mediaSrc, product.name, index);
+        : createImageElement(mediaSrc, `${product.name} - Image ${index + 1}`);
 
       productGallery.appendChild(mediaElement);
 
+      // Create indicator
       const indicator = document.createElement("div");
       indicator.className = "gallery-indicator";
       if (index === 0) indicator.classList.add("active");
@@ -489,6 +507,7 @@ function showNotification(message, type = "success") {
       galleryIndicators.appendChild(indicator);
     });
 
+    // Create product details
     productDetails.innerHTML = `
       <h2>${product.name}</h2>
       <p class="product-price">$${product.price.toFixed(2)}</p>
@@ -498,38 +517,57 @@ function showNotification(message, type = "success") {
       }">Add to Cart</button>
     `;
 
+    // Show modal
     productModal.style.display = "flex";
     document.body.style.overflow = "hidden";
     currentSlide = 0;
     updateGallery();
   }
 
-  function init() {
-    if (galleryPrev)
-      galleryPrev.addEventListener("click", () =>
-        goToSlide(Math.max(0, currentSlide - 1))
-      );
-    if (galleryNext)
-      galleryNext.addEventListener("click", () =>
-        goToSlide(
-          Math.min(productGallery.children.length - 1, currentSlide + 1)
-        )
-      );
+  // Navigation handlers
+  if (galleryPrev) {
+    galleryPrev.addEventListener("click", () =>
+      goToSlide(Math.max(0, currentSlide - 1))
+    );
+  }
 
-    // View details button handler
-    document.addEventListener("click", (e) => {
-      if (e.target.classList.contains("view-details")) {
-        const productCard = e.target.closest(".product-card");
-        if (productCard) {
-          const productId = parseInt(productCard.dataset.id);
-          const product = products.find((p) => p.id === productId);
-          if (product) openProductModal(product);
-        }
-      }
+  if (galleryNext) {
+    galleryNext.addEventListener("click", () =>
+      goToSlide(Math.min(productGallery.children.length - 1, currentSlide + 1))
+    );
+  }
+
+  // Close modal
+  const closeModal = productModal.querySelector(".close-modal");
+  if (closeModal) {
+    closeModal.addEventListener("click", () => {
+      productModal.style.display = "none";
+      document.body.style.overflow = "auto";
     });
   }
 
-  document.addEventListener("DOMContentLoaded", init);
+  // Close when clicking outside modal
+  productModal.addEventListener("click", (e) => {
+    if (e.target === productModal) {
+      productModal.style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+  });
+
+  // View details button handler
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("view-details")) {
+      const productCard = e.target.closest(".product-card");
+      if (productCard) {
+        const productId = parseInt(productCard.dataset.id);
+        const product = products.find((p) => p.id === productId);
+        if (product) openProductModal(product);
+      }
+    }
+  });
+
+  // Initialize gallery
+  updateGallery();
 })();
 
 // ========== CHECKOUT MODULE ==========
