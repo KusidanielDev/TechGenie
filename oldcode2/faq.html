@@ -8,7 +8,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="./styleNew.css" />
+    <link rel="stylesheet" href="./style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -22,15 +22,32 @@
           <button class="mobile-menu-toggle" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
           </button>
-          <h1 class="logo"><a href="indexNew.html">TECH GENIE</a></h1>
+          <h1 class="logo"><a href="index.html">TECH GENIE</a></h1>
         </div>
         <nav class="main-nav">
           <ul class="nav-list">
-            <li><a href="indexNew.html">Home</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
             <li><a href="faq.html">FAQs</a></li>
+            <li class="desktop-cart">
+              <a href="#cart" class="cart-link">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+              </a>
+            </li>
           </ul>
         </nav>
         <!-- Mobile cart button (outside nav) -->
+        <a
+          href="#cart"
+          class="cart-btn mobile-cart-btn"
+          aria-label="Shopping cart"
+        >
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count">0</span>
+        </a>
       </div>
     </header>
 
@@ -65,35 +82,28 @@
           </div>
         </div>
         <!-- Question 3 -->
-        <div id="shipping" class="faq-item">
+        <div class="faq-item">
           <button class="faq-question">
-            Shipping Policy
+            How long does delivery take?
             <i class="fas fa-chevron-down"></i>
           </button>
           <div class="faq-answer">
             <p>
-              We ship orders within 1-2 business days. Delivery times may vary
-              by location. All shipments are tracked, and you will receive a
-              confirmation email with tracking details once your order is
-              dispatched.
+              Delivery typically takes 2-3 business days within Accra and 3-5
+              days for other regions.
             </p>
           </div>
         </div>
         <!-- Question 4 -->
-        <div id="returns" class="faq-item">
+        <div class="faq-item">
           <button class="faq-question">
-            Returns and Refunds
+            How long does delivery take?
             <i class="fas fa-chevron-down"></i>
           </button>
           <div class="faq-answer">
             <p>
-              Our return policy allows you to return products within 30 days
-              of receipt for a full refund. To be eligible for a return, items
-              must be unused and in their original packaging.
-            </p>
-          </div>
-        </div>
-        <!-- Question 4 -->
+              Delivery typically takes 2-3 business days within Accra and 3-5
+              days for other regions.
             </p>
           </div>
         </div>
@@ -113,11 +123,11 @@
         <div class="footer-links">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="./indexNew.html#products">Products</a></li>
-            <li><a href="./indexNew.html#about">About Us</a></li>
-            <li><a href="./indexNew.html#contact">Contact</a></li>
-            <li><a href="faq.html#shipping">Shipping Policy</a></li>
-            <li><a href="faq.html#returns">Returns</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#">Shipping Policy</a></li>
+            <li><a href="#">Returns</a></li>
           </ul>
         </div>
 
@@ -136,8 +146,31 @@
       </div>
     </footer>
 
+    <div class="cart-modal" id="cart-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Your Cart</h3>
+          <button class="close-modal" aria-label="Close cart">&times;</button>
+        </div>
+        <div class="modal-body" id="cart-items">
+          <div class="empty-cart">
+            <i class="fas fa-shopping-cart"></i>
+            <p>Your cart is empty</p>
+            <a href="index.html#products" class="btn">Continue Shopping</a>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <p class="cart-total">
+            Total: $<span id="cart-total-amount">0.00</span>
+          </p>
+          <button class="btn btn-primary checkout-btn">
+            Proceed to Checkout
+          </button>
+        </div>
+      </div>
+    </div>
 
-    <script src="appNew.js"></script>
+    <script src="app.js"></script>
     <script src="faq.js"></script>
   </body>
 </html>
