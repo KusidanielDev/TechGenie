@@ -13,6 +13,10 @@
   --border-radius: 8px;
   --spacing: 1rem;
 }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px; /* Adjust to your header height */
+}
 
 * {
   margin: 0;
