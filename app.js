@@ -345,6 +345,26 @@ function showNotification(message, type = "success") {
     updateGallery();
   }
 
+  // Helper function to create image element
+  function createImageElement(src, alt, index) {
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = `${alt} - Image ${index + 1}`;
+    img.loading = "lazy";
+    return img;
+  }
+
+  // Helper function to create video element
+  function createVideoElement(src) {
+    const video = document.createElement("video");
+    video.src = src;
+    video.controls = true;
+    video.muted = true;
+    video.autoplay = true;
+    video.loop = true;
+    return video;
+  }
+
   function openProductModal(product) {
     if (
       !productModal ||
@@ -358,12 +378,15 @@ function showNotification(message, type = "success") {
     productDetails.innerHTML = "";
     galleryIndicators.innerHTML = "";
 
-    product.images.forEach((imgSrc, index) => {
-      const img = document.createElement("img");
-      img.src = imgSrc;
-      img.alt = `${product.name} - Image ${index + 1}`;
-      img.loading = "lazy";
-      productGallery.appendChild(img);
+    product.images.forEach((mediaSrc, index) => {
+      // Determine if it's a video or image
+      const isVideo = mediaSrc.toLowerCase().endsWith(".mp4");
+
+      const mediaElement = isVideo
+        ? createVideoElement(mediaSrc)
+        : createImageElement(mediaSrc, product.name, index);
+
+      productGallery.appendChild(mediaElement);
 
       const indicator = document.createElement("div");
       indicator.className = "gallery-indicator";
@@ -373,13 +396,13 @@ function showNotification(message, type = "success") {
     });
 
     productDetails.innerHTML = `
-                    <h2>${product.name}</h2>
-                    <p class="product-price">$${product.price.toFixed(2)}</p>
-                    <p>${product.description}</p>
-                    <button class="btn btn-primary add-to-cart" data-id="${
-                      product.id
-                    }">Add to Cart</button>
-                `;
+      <h2>${product.name}</h2>
+      <p class="product-price">$${product.price.toFixed(2)}</p>
+      <p>${product.description}</p>
+      <button class="btn btn-primary add-to-cart" data-id="${
+        product.id
+      }">Add to Cart</button>
+    `;
 
     productModal.style.display = "flex";
     document.body.style.overflow = "hidden";
