@@ -577,15 +577,31 @@ function showNotification(message, type = "success") {
     const newsletterForm = document.querySelector(".newsletter-form");
 
     if (contactForm) {
-      contactForm.addEventListener("submit", (e) => {
+      contactForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const name = document.getElementById("name").value;
-        const email = document.getElementById("email").value;
-        const message = document.getElementById("message").value;
-        showNotification(
-          "Thank you for your message! We will get back to you soon."
-        );
-        contactForm.reset();
+
+        const formData = new FormData(contactForm);
+
+        try {
+          const response = await fetch(contactForm.action, {
+            method: contactForm.method,
+            body: formData,
+            headers: {
+              Accept: "application/json",
+            },
+          });
+
+          if (response.ok) {
+            showNotification(
+              "Thank you for your message! We will get back to you soon."
+            );
+            contactForm.reset();
+          } else {
+            showNotification("There was a problem submitting your message.");
+          }
+        } catch (error) {
+          showNotification("Network error. Please try again later.");
+        }
       });
     }
 
