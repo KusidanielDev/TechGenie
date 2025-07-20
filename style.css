@@ -723,7 +723,7 @@ button {
   display: flex;
   height: 100%;
   transition: transform 0.5s ease;
-  padding: 0 0 1rem 0;
+  padding: 0 0 2rem 0;
 }
 
 .product-gallery img {
