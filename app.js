@@ -353,7 +353,7 @@ function showNotification(message, type = "success") {
     .video-container {
       position: relative;
       width: 100%;
-      height: 100%;
+      height: 80%;
     }
     
     .product-video {
@@ -483,6 +483,7 @@ function showNotification(message, type = "success") {
   }
 
   function openProductModal(product) {
+    currentSlide = 0; // Reset to first slide
     if (!productGallery || !productDetails || !galleryIndicators) return;
 
     // Clear existing content
@@ -516,6 +517,18 @@ function showNotification(message, type = "success") {
         product.id
       }">Add to Cart</button>
     `;
+
+    // Force gallery reset before showing
+    setTimeout(() => {
+      updateGallery();
+      productGallery.style.transition = "none";
+      productGallery.style.transform = "translateX(0)";
+
+      setTimeout(() => {
+        productGallery.style.transition = "";
+        updateGallery();
+      }, 50);
+    }, 10);
 
     // Show modal
     productModal.style.display = "flex";

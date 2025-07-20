@@ -723,7 +723,7 @@ button {
   display: flex;
   height: 100%;
   transition: transform 0.5s ease;
-  padding: 0 0 2rem 0;
+  padding: 0 0 3rem 0;
 }
 
 .product-gallery img {
@@ -784,8 +784,9 @@ button {
 }
 
 .product-details {
-  padding: 2rem;
+  padding: 0.5rem;
   overflow-y: auto;
+  max-height: 400px;
 }
 
 /* Notification */
