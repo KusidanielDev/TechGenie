@@ -606,7 +606,7 @@ button {
   cursor: pointer;
   color: var(--text-light);
   z-index: 10;
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
   transition: all 0.3s ease;
 }
 
@@ -723,6 +723,7 @@ button {
   display: flex;
   height: 100%;
   transition: transform 0.5s ease;
+  padding: 0 0 1rem 0;
 }
 
 .product-gallery img {
@@ -760,7 +761,7 @@ button {
 
 .gallery-indicators {
   position: absolute;
-  bottom: 15px;
+  bottom: 17px;
   left: 0;
   right: 0;
   display: flex;
